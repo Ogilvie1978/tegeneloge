@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MatematikHelt</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  <div id="mathapp">
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="ma-screen active">
+      <div class="ma-header">
+        <span class="ma-mascot">🤖</span>
+        <div class="ma-title">MatematikHelt</div>
+        <p class="ma-subtitle">Kan du slå robotten? Svar hurtigst muligt!</p>
+      </div>
+      <div class="ma-card">
+        <p class="ma-section-label">Vælg sværhedsgrad:</p>
+        <div class="ma-level-select">
+          <button class="ma-level-btn selected" onclick="selectLevel(this,'let')">😊 Let</button>
+          <button class="ma-level-btn" onclick="selectLevel(this,'mellem')">😤 Mellem</button>
+          <button class="ma-level-btn" onclick="selectLevel(this,'svær')">🔥 Svær</button>
+        </div>
+      </div>
+      <div class="ma-center mt2">
+        <button class="ma-btn" onclick="startGame()" style="font-size:22px;padding:16px 48px;">Start spillet!</button>
+      </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="ma-screen">
+      <div class="ma-stats">
+        <div class="ma-stat"><div class="ma-stat-val" id="scoreDisp">0</div><div class="ma-stat-lbl">point</div></div>
+        <div class="ma-stat"><div class="ma-stat-val" id="qNumDisp">1/10</div><div class="ma-stat-lbl">opgave</div></div>
+        <div class="ma-stat"><div class="ma-stat-val" id="streakDisp">0</div><div class="ma-stat-lbl">🔥 streak</div></div>
+      </div>
+      <div class="ma-card">
+        <div class="ma-stars" id="starsRow">
+          <span class="ma-star">⭐</span><span class="ma-star">⭐</span><span class="ma-star">⭐</span><span class="ma-star">⭐</span><span class="ma-star">⭐</span>
+        </div>
+        <div class="ma-timer-bar"><div class="ma-timer-fill" id="timerFill"></div></div>
+        <div class="ma-question" id="questionText">?</div>
+        <div class="ma-feedback" id="feedbackText"></div>
+        <div class="ma-input-row">
+          <input class="ma-input" type="number" id="answerInput" placeholder="?" onkeydown="checkOnEnter(event)" />
+          <button class="ma-btn" onclick="submitAnswer()">OK</button>
+        </div>
+        <div id="aiHintBox" class="ma-hint" style="display:none"></div>
+      </div>
+      <div class="ma-center mt1">
+        <button class="ma-btn ma-btn-sec" onclick="getAiHint()" style="margin-right:8px">💡 Få et hint</button>
+        <button class="ma-btn ma-btn-sec" onclick="skipQuestion()">Spring over</button>
+      </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="resultScreen" class="ma-screen">
+      <div class="ma-result">
+        <div class="ma-result-title" id="resultTitle">Godt klaret!</div>
+        <div class="ma-mascot" id="resultMascot">🎉</div>
+        <div class="ma-result-score" id="resultScore">0</div>
+        <div class="ma-result-msg" id="resultMsg">point samlet</div>
+        <div class="ma-badges" id="badgesRow"></div>
+        <button class="ma-btn" onclick="showStart()">Spil igen</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="lib/supabase.js"></script>
+  <script src="lib/anthropic.js"></script>
+  <script src="src/confetti.js"></script>
+  <script src="src/game.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
